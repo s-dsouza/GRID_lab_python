@@ -22,7 +22,8 @@ def select_directory(title="Select Folder"):
     root.withdraw()
     
     # Ensure the dialog appears on top of other windows
-    root.attributes('-topmost', True)
+    #root.attributes('-topmost', True)
+    root.call("wm", "attributes", ".", "-topmost", True)
     
     # Open the directory selection dialog
     # Returns the absolute path as a normal string
@@ -72,9 +73,11 @@ def load_iEEG(fstr, load_meta=True, chs=None):
         iEEG = re.search(r"iEEG.csv",f,re.IGNORECASE)
         if iEEG:
             if chs is None:
-                data = pd.read_csv(fstr+"\\"+f, index_col=0)
+                #data = pd.read_csv(fstr+"\\"+f, index_col=0)
+                data = pd.read_csv(fstr+"//"+f, index_col=0)
             else:
-                data = pd.read_csv(fstr+"\\"+f,usecols=chs, index_col=0)
+                #data = pd.read_csv(fstr+"\\"+f,usecols=chs, index_col=0)
+                data = pd.read_csv(fstr+"//"+f,usecols=chs, index_col=0)
         
             
            
@@ -108,6 +111,7 @@ def load_info(fstr, ftype="montage"):
     for f in os.listdir(fstr):
         tab = re.search(ftype+".csv",f)
         if tab:
-            return pd.read_csv(fstr+"\\"+f,delimiter=",")
+           # return pd.read_csv(fstr+"\\"+f,delimiter=",")
+            return pd.read_csv(fstr+"//"+f,delimiter=",")
         
         
